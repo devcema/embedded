@@ -1,0 +1,16 @@
+<div class="transactions" *ngFor="let transaction of transactions">
+  <div class="transaction">
+    <p class="id">#{{ transaction.transaction_id }}</p>
+    <p class="user">{{ transaction.user }}</p>
+    <p class="payment-method">{{ transaction.payment_method }}</p>
+    <p class="amount">
+      Gh&#8373; <span>{{ transaction.amount }}</span>
+    </p>
+    <p
+      class="trans-status"
+      [ngStyle]="{ color: transaction.status === 'failure' ? 'red' : '' }"
+    >
+      {{ transaction.status }}
+    </p>
+  </div>
+</div>

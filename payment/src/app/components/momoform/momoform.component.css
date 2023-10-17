@@ -1,0 +1,37 @@
+.payment-header{
+   font-weight: bold;
+   text-transform: uppercase;
+   font-size: 14px;
+}
+
+.input{
+   display: flex;
+   flex-direction: column;
+   /* gap: 10px; */
+}
+
+input{
+   padding-left: 10px;
+   padding-top: 10px;
+   padding-bottom: 10px;
+}
+
+.paymentForm{
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+}
+
+label{
+   margin-bottom: 2px;
+   font-size: 14px;
+}
+
+.option{
+   padding: 10px 0;
+}
+
+#select-momo{
+   text-align: center;
+   padding: 10px 0;
+}

@@ -1,0 +1,42 @@
+<!-- <p>modal works!</p> -->
+<div class="overlay" (click)="closeModal()">
+  <div class="drop-shadow modal-content" (click)="preventModalClose($event)">
+    <!-- @todo modal content -->
+    <div class="modal-head">
+      <div class="email-pay">
+        <div class="email">{{ email }}</div>
+        <div class="price">
+          Pay Gh&#8373; <span>{{ price }}</span>
+        </div>
+      </div>
+      <div>
+        <p class="toggle-payment">SELECT METHOD TO PAY WITH</p>
+        <div class="payment">
+          <div
+            class="ccpay pay"
+            (click)="togglePaymentMethod('cc')"
+            [ngStyle]="{ border: showcc ? '2px solid green' : '' }"
+          >
+            Credit Card
+          </div>
+          <div
+            class="momopay pay"
+            (click)="togglePaymentMethod('momo')"
+            [ngStyle]="{ border: showmomo ? '2px solid green' : '' }"
+          >
+            Mobile Money
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="showcc">
+      <app-payment-form [price]="price" [email]="email"></app-payment-form>
+    </div>
+    <div *ngIf="showmomo">
+      <app-momoform [price]="price" [email] = "email"></app-momoform>
+    </div>
+
+    <p class="cancel-payment" (click)="cancelPayment()">cancel payment</p>
+  </div>
+</div>
