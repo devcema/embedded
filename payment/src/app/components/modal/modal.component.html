@@ -46,14 +46,14 @@
     </div>
     <div
       class="payment-status success"
-      *ngIf="paymentStatus.status === 'success'"
+      *ngIf="
+        paymentStatus.status === 'success' || paymentStatus.status === 'pending'
+      "
     >
       <app-status [paymentStatus]="paymentStatus"></app-status>
     </div>
     <div class="payment-status" *ngIf="paymentStatus.status === 'failure'">
-      <app-failed-status
-        *ngIf="paymentStatus.status === 'failure'"
-      ></app-failed-status>
+      <app-failed-status [paymentStatus]="paymentStatus"></app-failed-status>
     </div>
 
     <p class="cancel-payment" (click)="cancelPayment()">cancel payment</p>

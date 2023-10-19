@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,14 +6,17 @@ import { Router } from '@angular/router';
   templateUrl: './failed-status.component.html',
   styleUrls: ['./failed-status.component.css']
 })
-export class FailedStatusComponent {
+export class FailedStatusComponent implements OnInit {
   @Input() paymentStatus: any  
 
 
   constructor(private router: Router){
+   
+  }
+  ngOnInit(): void {
     setTimeout(()=> {
-      this.router.navigate(['initiatepayment'])
-  }, 5000);
+      this.paymentStatus.status = ''
+  }, 3000);
   }
 
 }

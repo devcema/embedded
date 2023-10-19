@@ -17,7 +17,7 @@ export class ModalComponent implements OnInit{
 
   }
   ngOnInit(): void {
-    this.paymentStatus.status = ''
+    this.paymentStatus.status = 'failure'
     this.paymentStatus.message = '' 
   }
 
