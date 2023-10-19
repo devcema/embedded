@@ -16,6 +16,7 @@ import { TransactionListComponent } from './components/transaction-list/transact
 import { ReactiveFormsModule } from '@angular/forms';
 import { StatusComponent } from './components/status/status.component';
 import { FailedStatusComponent } from './components/failed-status/failed-status.component';
+import { OtpComponent } from './components/otp/otp.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { FailedStatusComponent } from './components/failed-status/failed-status.
     TransactionListComponent,
     StatusComponent,
     FailedStatusComponent,
+    OtpComponent,
    
   ],
   imports: [

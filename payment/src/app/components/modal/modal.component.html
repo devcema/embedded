@@ -30,6 +30,7 @@
       </div>
     </div>
 
+    <!-- Select Method to pay with -Show credit card form -->
     <div *ngIf="showcc">
       <app-payment-form
         [price]="price"
@@ -37,6 +38,8 @@
         [paymentStatus]="paymentStatus"
       ></app-payment-form>
     </div>
+
+    <!-- Select Method to pay with -Show momo form -->
     <div *ngIf="showmomo">
       <app-momoform
         [price]="price"
@@ -44,18 +47,24 @@
         [paymentStatus]="paymentStatus"
       ></app-momoform>
     </div>
+
+    <!-- If payment response is success or pending -->
     <div
       class="payment-status success"
-      *ngIf="
-        paymentStatus.status === 'success' || paymentStatus.status === 'pending'
-      "
+      *ngIf="paymentStatus.status === 'success'"
     >
       <app-status [paymentStatus]="paymentStatus"></app-status>
     </div>
+
+    <!-- If payment response is failure -->
     <div class="payment-status" *ngIf="paymentStatus.status === 'failure'">
       <app-failed-status [paymentStatus]="paymentStatus"></app-failed-status>
     </div>
 
+    <!-- If payment status is pending, require otp -->
+    <div *ngIf="paymentStatus.status ==='pending' " class="payment-status">
+      <app-otp [paymentStatus]="paymentStatus"></app-otp>
+    </div>
     <p class="cancel-payment" (click)="cancelPayment()">cancel payment</p>
   </div>
 </div>

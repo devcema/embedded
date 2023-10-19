@@ -46,8 +46,13 @@ export class PaymentFormComponent implements OnInit {
       
     
       this.transactionService.postTransactions(this.ccTransaction).subscribe((response: any )=> {
-        this.paymentStatus.status = response.status
-        this.paymentStatus.message = response.message
+        if(response.status === 'pending'){
+          response.message = 'Payment pending, confirm OTP to proceed'
+        } else {
+          this.paymentStatus.status = response.status
+          this.paymentStatus.message = response.message
+
+        }
       })
     }
   }

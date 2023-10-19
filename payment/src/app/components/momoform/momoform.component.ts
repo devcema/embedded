@@ -42,8 +42,13 @@ export class MomoformComponent {
        this.transactionService.postTransactions(this.momoTransaction).subscribe((response: any) => {
 
         // Assign response to payment status object
-        this.paymentStatus.status = response.status;
-        this.paymentStatus.message = response.message; 
+        if(response.status === 'pending'){
+          response.message = 'Payment pending, confirm OTP to proceed'
+        } else {
+          this.paymentStatus.status = response.status
+          this.paymentStatus.message = response.message
+
+        }
        } )
        
        

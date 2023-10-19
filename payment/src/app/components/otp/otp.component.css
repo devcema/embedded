@@ -1,0 +1,56 @@
+.payment-stat{
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   flex-direction: column;
+   gap: 40px;
+   padding: 10px;
+   text-align: center;
+   transition: opacity 3s;
+
+}
+
+input{
+   padding: 10px 0;
+   border: none;
+   border-radius: 5px;
+   text-align: center;
+   display: flex;
+   flex-direction: column;
+   gap: 5px;
+   align-items: center;
+   justify-content: center;
+}
+
+.response-message{
+   text-align: center;
+   font-size: 14px;
+}
+
+form{
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+}
+
+button{
+   padding: 8px 0;
+   outline: none;
+   font-size: 14px;
+   font-weight: bold;
+   border: none ;
+   background: #504040;
+   color: #eee;
+   cursor: pointer;
+}
+
+button:hover{
+   transform: scale(0.9);
+}
+
+button:active{
+   transform: scale(1.05);
+}
+
+
+
