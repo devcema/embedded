@@ -16,8 +16,8 @@ export class TransactionListComponent implements OnInit{
    this.transactionService.getTransactions().subscribe((response:any) => {
     
     this.transactions = response.data;
-  })
-  
-  
+  })  
 }
+
+
 }

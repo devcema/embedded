@@ -1,60 +1,87 @@
-<form id="ccForm" class="paymentForm" (ngSubmit)="onSubmit()">
-  <!-- credit card form starts here -->
+<form
+  [formGroup]="creditCardForm"
+  id="creditCardForm"
+  class="paymentForm"
+  (ngSubmit)="onSubmit()"
+>
   <p class="payment-header">Enter Credit Card Details</p>
 
   <div class="input">
-    <label for="card-name">Name On Card:</label>
+    <label for="cardName">Card Holder:</label>
     <input
       type="text"
-      id="card-name"
-      name="cardName"
-      [(ngModel)]="cardName"
-      placeholder="Name on card"
+      id="cardName"
+      formControlName="cardName"
+      placeholder="John Doe"
       required
     />
+    <div
+      class="error"
+      *ngIf="creditCardForm.get('cardName')?.hasError('pattern')"
+    >
+      Enter valid card holder name.
+    </div>
   </div>
 
   <div class="input">
-    <label for="card-number">Card Number:</label>
+    <label for="cardNumber">Card Number:</label>
     <input
-      type=""
-      id="card-number"
-      name="cardNumber"
-      [(ngModel)]="cardNumber"
-      placeholder="Card Number"
-      min="15"
-      max="16"
+      type="text"
+      id="cardNumber"
+      formControlName="cardNumber"
+      placeholder="5555 5555 5555 5555"
       required
     />
+    <div
+      class="error"
+      *ngIf="creditCardForm.get('cardNumber')?.hasError('pattern')"
+    >
+      Invalid card number format.
+    </div>
   </div>
 
   <div class="input">
-    <label for="expiry-date">Expiry Date:</label>
+    <label for="cardCvv">Cvv:</label>
     <input
       type="text"
-      id="expiry-date"
-      name="cardExpiry"
-      [(ngModel)]="cardExpiry"
-      placeholder="MM/YY"
+      id="cardCvv"
+      formControlName="cardCvv"
+      placeholder="256"
       required
     />
+    <div
+      class="error"
+      *ngIf="creditCardForm.get('cardCvv')?.hasError('pattern')"
+    >
+      Invalid card cvv format.
+    </div>
   </div>
   <div class="input">
-    <label for="cvv">Cvv:</label>
+    <label for="cardExpiry">Card Expiry:</label>
     <input
       type="text"
-      id="cvv"
-      name="cardCvv"
-      [(ngModel)]="cardCvv"
-      placeholder="123"
-      min="3"
-      max="3"
+      id="cardExpiry"
+      formControlName="cardExpiry"
+      placeholder="12/2023"
       required
     />
+    <div
+      class="error"
+      *ngIf="creditCardForm.get('cardExpiry')?.hasError('pattern')"
+    >
+      Invalid expiry format.
+    </div>
   </div>
 
   <!-- credit card form ends here -->
 
-  <p class="status">{{ status }}</p>
-  <button type="submit" id="submitCCPayment" class="btn">Checkout</button>
+  <!-- <p class="status">{{ status }}</p> -->
+  <button
+    type="submit"
+    id="submitCCPayment"
+    class="btn"
+    [disabled]="creditCardForm.invalid"
+  >
+    Checkout
+  </button>
 </form>

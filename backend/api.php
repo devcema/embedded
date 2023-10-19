@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get the POST data
     $postData = json_decode(file_get_contents('php://input'));
 
-    // var_dump($postData);
+
     
     // Check if the 'data' field is provided in the POST data
     if (isset($postData->paymentMethod)) {
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
          $price = filter_var($postData->price, FILTER_VALIDATE_FLOAT); 
 
          $status = simulatePaymentGateway($price)['status'];
-        //  var_dump($status);
+        
          
          $query = "INSERT INTO transactions(payment_method, user, card_name, card_number, card_expiry, card_cvv, amount, status) VALUES ('$paymentMethod', '$user', '$cardName', '$cardNumber', '$cardExpiry', '$cardCvv', '$price', '$status')";
 

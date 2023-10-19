@@ -1,7 +1,7 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
-   $cardQuery =  "SELECT * FROM transactions";
+   $cardQuery =  "SELECT * FROM transactions ORDER BY transaction_id";
    
    
    
@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
    // $momoQuery ="SELECT user, amount, status, transaction_date, payment_method, RIGHT(mobile_money, 4) AS mobile_money FROM transactions WHERE payment_method = 'Mobile Money'" ;
 
    $cardRes = mysqli_query($conn, $cardQuery);
-   // $momoRes = mysqli_query($conn, $momoQuery);
+ 
 
    if (mysqli_num_rows($cardRes) > 0){
       $data = [];

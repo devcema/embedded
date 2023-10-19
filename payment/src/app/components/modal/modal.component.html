@@ -1,5 +1,5 @@
 <!-- <p>modal works!</p> -->
-<div class="overlay" (click)="closeModal()">
+<div class="overlay">
   <div class="drop-shadow modal-content" (click)="preventModalClose($event)">
     <!-- @todo modal content -->
     <div class="modal-head">
@@ -31,10 +31,29 @@
     </div>
 
     <div *ngIf="showcc">
-      <app-payment-form [price]="price" [email]="email"></app-payment-form>
+      <app-payment-form
+        [price]="price"
+        [email]="email"
+        [paymentStatus]="paymentStatus"
+      ></app-payment-form>
     </div>
     <div *ngIf="showmomo">
-      <app-momoform [price]="price" [email] = "email"></app-momoform>
+      <app-momoform
+        [price]="price"
+        [email]="email"
+        [paymentStatus]="paymentStatus"
+      ></app-momoform>
+    </div>
+    <div
+      class="payment-status success"
+      *ngIf="paymentStatus.status === 'success'"
+    >
+      <app-status [paymentStatus]="paymentStatus"></app-status>
+    </div>
+    <div class="payment-status" *ngIf="paymentStatus.status === 'failure'">
+      <app-failed-status
+        *ngIf="paymentStatus.status === 'failure'"
+      ></app-failed-status>
     </div>
 
     <p class="cancel-payment" (click)="cancelPayment()">cancel payment</p>

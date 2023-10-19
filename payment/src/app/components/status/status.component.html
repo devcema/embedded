@@ -1,0 +1,24 @@
+<div class="payment-stat">
+  <div class="img-container">
+    <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 448 512">
+      <style>
+        svg {
+          fill: #20511f;
+        }
+      </style>
+      <path
+        d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+      />
+    </svg>
+  </div>
+
+  <div class="status-message">
+    <p [ngStyle]="{ color: paymentStatus.status === 'success' ? 'green' : '' }">
+      {{ paymentStatus.message }}
+    </p>
+
+    <p class="redirect-text">
+      You'll be redirected shortly to the payment log page
+    </p>
+  </div>
+</div>

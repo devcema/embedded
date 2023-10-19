@@ -12,7 +12,10 @@ import { TransactionsComponent } from './components/transactions/transactions.co
 import { MomoformComponent } from './components/momoform/momoform.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TransactionListComponent } from './components/transaction-list/transaction-list.component';
-import { OtpcomponentComponent } from './component/otpcomponent/otpcomponent.component';
+
+import { ReactiveFormsModule } from '@angular/forms';
+import { StatusComponent } from './components/status/status.component';
+import { FailedStatusComponent } from './components/failed-status/failed-status.component';
 
 @NgModule({
   declarations: [
@@ -24,15 +27,17 @@ import { OtpcomponentComponent } from './component/otpcomponent/otpcomponent.com
     TransactionsComponent,
     MomoformComponent,
     TransactionListComponent,
-    OtpcomponentComponent,
-    
+    StatusComponent,
+    FailedStatusComponent,
+   
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FontAwesomeModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

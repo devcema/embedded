@@ -1,5 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TransactionsService } from 'src/app/transactions.service';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
+
 
 @Component({
   selector: 'app-payment-form',
@@ -7,52 +9,100 @@ import { TransactionsService } from 'src/app/transactions.service';
   styleUrls: ['./payment-form.component.css']
 })
 
-export class PaymentFormComponent {
+export class PaymentFormComponent implements OnInit {
   paymentMethod: string = 'Credit Card';
-  cardNumber!: number ;
-  cardExpiry: string = '';
-  cardName: string = '';
-  cardCvv!: number
-  status: string = ''
+  creditCardForm!: FormGroup;
   @Input() price: any
   @Input() email: any
+  @Input() paymentStatus: any
+  ccTransaction: any = {}
 
   
-  
 
-  constructor(private transactionService: TransactionsService){}
+  constructor(private fb: FormBuilder, private transactionService: TransactionsService) {
+    this.creditCardForm = this.fb.group({
+      cardNumber: ['', [Validators.required, Validators.pattern('[0-9]{16}')]],
+      cardName: ['', [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
+      cardExpiry: ['', [Validators.required, Validators.pattern('(0[1-9]|1[0-2])/(20[0-9]{2}|[2-9][0-9]{3})')]],
+      cardCvv: ['', [Validators.required, Validators.pattern('[0-9]{3}')]]
+    });
+  }
+
+
+  ngOnInit(): void {
+    
+  }
 
   onSubmit() {
-    if(!this.cardCvv && !this.cardExpiry && !this.cardName && !this.cardNumber){
-      this.status = 'all fields required'
-      return;
-    } else {
-
-      let ccTransaction = {
-        user:this.email,
-        price: this.price,
-        paymentMethod:this.paymentMethod,
-        cardName: this.cardName,
-        cardNumber: this.cardNumber,
-        cardCvv: this.cardCvv,
-        cardExpiry: this.cardExpiry,
-        
-       }
-
-       this.transactionService.postTransactions(ccTransaction).subscribe((response)=>{
-          this.status = 'success';
-       })
-
-       this.cardName = ''
-       this.cardExpiry=''
-       this.cardNumber = 0
-       this.cardCvv = 0
-    }
-    }
+    if (this.creditCardForm.valid) {
+      this.ccTransaction.paymentMethod = this.paymentMethod
+      this.ccTransaction.price = this.price
+      this.ccTransaction.user = this.email
+      this.ccTransaction.cardName = this.creditCardForm.value.cardName
+      this.ccTransaction.cardNumber = +this.creditCardForm.value.cardNumber
+      this.ccTransaction.cardExpiry = this.creditCardForm.value.cardExpiry
+      this.ccTransaction.cardCvv = +this.creditCardForm.value.cardCvv
+      
+      
     
-    
-   
-    //@todo - api request to server
-
+      this.transactionService.postTransactions(this.ccTransaction).subscribe((response: any )=> {
+        this.paymentStatus.status = response.status
+        this.paymentStatus.message = response.message
+      })
+    }
   }
+  
+
+  
+    }
+    
+
+
+  
+
+
+
+
+  
+  // @Component({
+  //   selector: 'app-payment-form',
+  //   templateUrl: './payment-form.component.html',
+  //   styleUrls: ['./payment-form.component.css']
+  // })
+  // export class CreditCardFormComponent implements OnInit {
+  //   creditCardForm: FormGroup;
+  
+   
+  // }
+  
+
+
+
+  // constructor(private transactionService: TransactionsService, private fb: FormBuilder){
+  //   this.creditCardForm  = this.fb.group({
+  //     cardNumber: [null, [Validators.required, Validators.pattern('[0-9]{16}')]],
+  //     cardHolder: [null, Validators.required],
+  //     expirationDate: [null, [Validators.required, Validators.pattern('(0[1-9]|1[0-2])/(20[0-9]{2}|[2-9][0-9]{3})')]],
+  //     cvv: [null, [Validators.required, Validators.pattern('[0-9]{3}')]]
+  //   });
+  // }
+
+  // onSubmit() {
+   
+
+  //     let ccTransaction = {
+  //       user:this.email,
+  //       price: this.price,
+  //       paymentMethod:this.paymentMethod,
+      
+        
+  //      }
+
+  //      this.transactionService.postTransactions(ccTransaction).subscribe((response)=>{
+  //         this.status = 'success';
+  //      })
+
+       
+  //   }
+
 

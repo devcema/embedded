@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {Router} from '@angular/router'
 
 @Component({
@@ -6,26 +6,26 @@ import {Router} from '@angular/router'
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.css']
 })
-export class ModalComponent {
-  @Input() isOpen: boolean = false;
+export class ModalComponent implements OnInit{
   price:number = Math.floor(Math.random() * 60) + 100;
   email:string = 'user@email.com'
+  paymentStatus: any = {}
   showcc: boolean = true;
   showmomo:boolean =false;
 
   constructor(private router: Router){
 
   }
-  closeModal() {
-    this.isOpen = false;
+  ngOnInit(): void {
+    this.paymentStatus.status = ''
+    this.paymentStatus.message = '' 
   }
+
+ 
+  
 
   preventModalClose(event: Event) {
     event.stopPropagation(); // Prevent clicking inside the modal from closing it
-  }
-
-  setStatus(){
-    
   }
 
   togglePaymentMethod(divText: string){

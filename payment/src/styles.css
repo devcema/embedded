@@ -124,10 +124,23 @@
   border: 1px solid black;
 }
 
-.status{
+.btn:active{
+  transform: scale(1.07);
+}
+
+
+
+.status, .error{
   text-align: center;
   font-size: 12px;
   text-transform: lowercase;
   color: red;
   font-weight: bold;
+}
+
+input::placeholder {
+  font-size: 12px;
+  text-align: center;
+  font-weight: 200;
+  color: #ddd;
 }

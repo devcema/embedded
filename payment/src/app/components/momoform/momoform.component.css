@@ -31,7 +31,17 @@ label{
    padding: 10px 0;
 }
 
-#select-momo{
+select{
    text-align: center;
    padding: 10px 0;
+}
+
+option{
+   text-align: center;
+   padding: 5px 0;
+}
+
+form:disabled {
+   color: black;
+   background: gray;
 }

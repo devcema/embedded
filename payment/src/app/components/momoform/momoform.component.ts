@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TransactionsService } from 'src/app/transactions.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-momoform',
@@ -9,58 +10,45 @@ import { TransactionsService } from 'src/app/transactions.service';
 })
 export class MomoformComponent {
   paymentMethod: string = 'Mobile Money'
-  momo_provider: string = 'Vodafone Cash' ;
-  momoNumber: number = 0 ;
   otpRequired: boolean = false;
-  status:string = ''
-  otp!: number
+  momoForm: FormGroup;
+  momoTransaction: any = {}
   @Input() price!: number
   @Input() email!: string
+  @Input() paymentStatus: any
 
-  constructor(private transactionService: TransactionsService, private router: Router){}
+  constructor(private fb: FormBuilder, private transactionService: TransactionsService, private router: Router){
+    this.momoForm = this.fb.group({
+      momo_provider: ['mtn', Validators.required],
+      momoNumber: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
+    });
+  }
 
+  ngOnInit(): any {
+
+  }
 
   onSubmit() {
     
-    console.log("Form submitted:", this.paymentMethod, this.momo_provider, this.momoNumber, this.price, this.email);
-    
-    if(!this.momo_provider && !this.momoNumber){
-      alert('all fields are required')
-      
+    // Validate form 
+    if(this.momoForm.valid){
+      this.momoTransaction.paymentMethod = this.paymentMethod
+      this.momoTransaction.price = this.price
+      this.momoTransaction.user = this.email
+      this.momoTransaction.momoNumber = +this.momoForm.value.momoNumber
+      this.momoTransaction.momo_provider = this.momoForm.value.momo_provider
     }
+      //Subscribe to post transaction service
+       this.transactionService.postTransactions(this.momoTransaction).subscribe((response: any) => {
 
-    if(this.momoNumber.toString().length !== 10){
-      this.status = 'phone number must be 10 digits'
-      
-    } else{
-      this.status = ''
-      this.otpRequired = true
-
-      if(this.otp !== 4444){
-        this.status = 'Invalid OTP, redirecting';
-        this.momoNumber=0;
-
-        return;
-         
-      }
-
-      this.status = '';
-
-      let momoTransaction = {
-        user:this.email,
-        price: this.price,
-        paymentMethod:this.paymentMethod,
-        momoNumber: this.momoNumber,
-        momo_provider: this.momo_provider,
-       }
-    
-    
-       this.transactionService.postTransactions(momoTransaction).subscribe((response) => console.log(response))
+        // Assign response to payment status object
+        this.paymentStatus.status = response.status;
+        this.paymentStatus.message = response.message; 
+       } )
        
-      
+       
     }
-
-    //@todo - api request to server
-   
   }
-}
+
+
+
